@@ -1,0 +1,25 @@
+Jogo: JokenPokemon
+Instruções:
+- A primeira aba e a mao do jogador 1. A segunda do jogador 2.
+- O jogador 1 sempre joga primeiro.
+- Na sua vez cada jogador escolhe uma carta para lutar.
+- A carta que vencer evolui (ate 3). A que perder perde uma evolucao (ate -1).
+- Cartas cuja evolucao chegam em -1 sao descartadas
+- Quando as cartas de um jogador acabam o jogo termina e o outro jogador vence.
+
+Implementacao:
+- A lógica do jogo e controlada pela classe "Game".
+- A classe "Game" usa as classes "Card" (representa uma carta) e "CardDeck" (representa um deck de cartas).
+- Todas estas classes são derivadas de "Observer" de maneira que podem ser observadas por componentes de interface com o usuário
+- Sempre que sinalizam eventos as classes do jogo enviam uma instancia de "GameEvent" p/a interface que as estiver observando. 
+- Instancias de "GameEvent" indicam a quem o evento se destina (Target) e qual a ação (Action) mais um parametro extra (String)
+- A interface com o usuário tem como classe principal "GameWindow".
+- Para exibir as cartas existe o "CardView" (capaz de exibir uma carta)
+- Para exibir um deck existe o "DeckView" (capaz de exibir um deck de cartas)
+- "GameWindow" e "DeckView" são observadores de "Game" e "CardDeck", respectivamente
+- "CardView" é mais complexo: observa "Card" (para exibir a imagem correta toda a vez que a carta é virada) e
+- é observado por "DeckView" (para selecionar a carta clicada). Note que para "DeckView" observar "CardView" usa-se um
+- interface específico chamado "CardSelected". Este é um relacionamento entre componentes de interface pois um "DeckView" e uma - colecao de "CardViews". Então quando uma carta é clicada ela notifica seu observador ("DeckView") que anota a carta selecionada
+- e aciona o método "play" de "Game". 
+- A classe "ImageFactory" garante que só as imagens das cartas usadas são realmente carregadas para a memória e que uma mesma -
+- imagem não é carregada duas vezes.
